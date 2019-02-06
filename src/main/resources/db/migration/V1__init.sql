@@ -37,9 +37,12 @@ insert into `order` (city, country, county, street_address, customer, shipped_fr
 insert into `order` (city, country, county, street_address, customer, shipped_from) values ('Edsbyn', 'Sweden', 'Gävleborg', '9 Knutson Place', 1, 3)
 insert into `order` (city, country, county, street_address, customer, shipped_from) values ('Newmarket', 'Canada', '	Ontario', '	75 Corben Place', 1, 3)
 
-insert into product_category(description, name) values ('', '')
+insert into product_category(description, name) values ('Vehicles and accessories', 'cars')
+insert into product_category(description, name) values ('Products for healthcare', 'pharmaceuticals')
 
-insert into supplier(name) values ('')
+insert into supplier(name) values ('Mante-Howell')
+insert into supplier(name) values ('Barton-Ward')
+insert into supplier(name) values ('Kub-Wolff')
 
 insert into product (description, name, price, weight, category, supplier) values ('oxycodone hydrochloride', 'Roxicodone', 9.50, 2, 1, 2)
 insert into product (description, name, price, weight, category, supplier) values ('teduglutide', 'Gattex', 9.49, 10, 1, 1)
@@ -49,6 +52,13 @@ insert into product (description, name, price, weight, category, supplier) value
 insert into product (description, name, price, weight, category, supplier) values ('300D', 'Mercedes-Benz', 15784.49, 20612, 2, 3)
 insert into product (description, name, price, weight, category, supplier) values ('Grand Marquis', 'Mercury', 2628.75, 23534, 1, 2)
 
-insert into order_detail (quantity, order_id, product_id)
+insert into order_detail (quantity, order_id, product_id) values (12, 1, 5)
+insert into order_detail (quantity, order_id, product_id) values (1, 4, 2)
+insert into order_detail (quantity, order_id, product_id) values (6, 2, 6)
+insert into order_detail (quantity, order_id, product_id) values (3, 3, 1)
 
-insert into stock(quantity, location_id, product_id) values ()
+insert into stock(quantity, location_id, product_id) values (2, 1, 1)
+insert into stock(quantity, location_id, product_id) values (2, 2, 1)
+insert into stock(quantity, location_id, product_id) values (2, 3, 2)
+insert into stock(quantity, location_id, product_id) values (2, 2, 6)
+insert into stock(quantity, location_id, product_id) values (2, 2, 5)
