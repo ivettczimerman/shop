@@ -1,16 +1,17 @@
 package ro.msg.learning.shop.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ro.msg.learning.shop.model.Supplier;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface SupplierRepository extends CrudRepository<Supplier, Integer> {
+public interface SupplierRepository extends JpaRepository<Supplier, Integer> {
     @Override
     Optional<Supplier> findById(Integer integer);
 
     @Override
-    Iterable<Supplier> findAll();
+    List<Supplier> findAll();
 
     @Override
     void deleteAll();

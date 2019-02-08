@@ -1,11 +1,12 @@
 package ro.msg.learning.shop.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ro.msg.learning.shop.model.Product;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface ProductRepository extends CrudRepository<Product, Integer> {
+public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Override
     void deleteAll();
 
@@ -19,7 +20,7 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
     Optional<Product> findById(Integer integer);
 
     @Override
-    Iterable<Product> findAll();
+    List<Product> findAll();
 
     @Override
     <S extends Product> S save(S s);

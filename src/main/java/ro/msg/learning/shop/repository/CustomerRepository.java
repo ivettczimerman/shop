@@ -1,17 +1,17 @@
 package ro.msg.learning.shop.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ro.msg.learning.shop.model.Customer;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface CustomerRepository extends CrudRepository<Customer, Integer> {
-
+public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     @Override
     Optional<Customer> findById(Integer integer);
 
     @Override
-    Iterable<Customer> findAll();
+    List<Customer> findAll();
 
     @Override
     void deleteById(Integer integer);
