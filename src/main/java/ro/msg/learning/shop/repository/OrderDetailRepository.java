@@ -1,13 +1,14 @@
 package ro.msg.learning.shop.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import ro.msg.learning.shop.model.OrderDetail;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface OrderDetailRepository extends CrudRepository<OrderDetail, Integer> {
+public interface OrderDetailRepository extends JpaRepository<OrderDetail, Integer> {
     @Override
-    Iterable<OrderDetail> findAll();
+    List<OrderDetail> findAll();
 
     @Override
     Optional<OrderDetail> findById(Integer integer);

@@ -4,15 +4,16 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "Product")
 @Table(name = "product")
 @Data
 public class Product {
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "product_generator", sequenceName = "product_sequence", allocationSize = 1)
+    @GeneratedValue(generator = "product_generator")
     private int id;
     private String name;
     private String description;
@@ -27,15 +28,17 @@ public class Product {
     @JoinColumn(name = "supplier")
     private Supplier supplier;
 
-    @JoinTable(name = "stock",
-            joinColumns = @JoinColumn(name = "product"),
-            inverseJoinColumns = @JoinColumn(name = "location")
+    @OneToMany(
+            mappedBy = "location",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
-    private Set<Location> locations = new HashSet<>();
+    private List<Stock> locations = new ArrayList<>();
 
-    @JoinTable(name = "order_detail",
-            joinColumns = @JoinColumn(name = "product"),
-            inverseJoinColumns = @JoinColumn(name = "order")
+    @OneToMany(
+            mappedBy = "order",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
-    private Set<Order> orders = new HashSet<>();
+    private List<OrderDetail> orders = new ArrayList<>();
 }

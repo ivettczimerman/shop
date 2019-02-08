@@ -3,15 +3,17 @@ package ro.msg.learning.shop.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 @Entity(name = "Order")
 @Table(name = "order")
 @Data
 public class Order {
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "order_generator", sequenceName = "order_sequence", allocationSize = 1)
+    @GeneratedValue(generator = "order_generator")
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -22,13 +24,34 @@ public class Order {
     @JoinColumn(name = "customer")
     private Customer customer;
 
-    @JoinTable(name = "order_detail",
-            joinColumns = @JoinColumn(name = "order"),
-            inverseJoinColumns = @JoinColumn(name = "product")
+    @OneToMany(
+            mappedBy = "product",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
     )
-    private Set<Product> products = new HashSet<>();
+    private List<OrderDetail> products = new ArrayList<>();
+
     private String country;
     private String city;
     private String county;
     private String streetAddress;
+
+    public void addProduct(Product product) {
+        OrderDetail orderDetail = new OrderDetail(product, this);
+        products.add(orderDetail);
+        product.getOrders().add(orderDetail);
+    }
+
+    public void removeProduct(Product product) {
+        for (Iterator<OrderDetail> iterator = products.iterator(); iterator.hasNext(); ) {
+            OrderDetail orderDetail = iterator.next();
+
+            if (orderDetail.getOrder().equals(this) && orderDetail.getProduct().equals(product)) {
+                iterator.remove();
+                orderDetail.getProduct().getOrders().remove(orderDetail);
+                orderDetail.setProduct(null);
+                orderDetail.setOrder(null);
+            }
+        }
+    }
 }
