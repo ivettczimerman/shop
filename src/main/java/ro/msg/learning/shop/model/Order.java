@@ -29,21 +29,21 @@ public class Order {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<OrderDetail> products = new ArrayList<>();
+    private List<OrderDetail> orderDetails = new ArrayList<>();
 
     private String country;
     private String city;
     private String county;
     private String streetAddress;
 
-    public void addProduct(Product product) {
-        OrderDetail orderDetail = new OrderDetail(product, this);
-        products.add(orderDetail);
+    public void addProduct(Product product, int quantity) {
+        OrderDetail orderDetail = new OrderDetail(product, this, quantity);
+        orderDetails.add(orderDetail);
         product.getOrders().add(orderDetail);
     }
 
     public void removeProduct(Product product) {
-        for (Iterator<OrderDetail> iterator = products.iterator(); iterator.hasNext(); ) {
+        for (Iterator<OrderDetail> iterator = orderDetails.iterator(); iterator.hasNext(); ) {
             OrderDetail orderDetail = iterator.next();
 
             if (orderDetail.getOrder().equals(this) && orderDetail.getProduct().equals(product)) {

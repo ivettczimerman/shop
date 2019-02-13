@@ -24,4 +24,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Override
     <S extends Product> S save(S s);
+
+    List<Product> findByIdIn(List<Integer> ids);
 }

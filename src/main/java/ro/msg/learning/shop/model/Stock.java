@@ -23,7 +23,8 @@ public class Stock {
     @Column(name = "quantity")
     private int quantity;
 
-    public Stock(){}
+    public Stock() {
+    }
 
     public Stock(Product product, Location location) {
         this.product = product;
@@ -46,5 +47,9 @@ public class Stock {
     @Override
     public int hashCode() {
         return Objects.hash(product, location);
+    }
+
+    public int getProductId() {
+        return product.getId();
     }
 }
