@@ -29,41 +29,31 @@ public class SingleLocationFinder implements LocationFinderStrategy {
 
     @Override
     public List<LocationProductQuantity> findLocationProductQuantity(List<ProductIdQuantity> products) {
-        List<LocationProductQuantity> locationProductQuantities = new ArrayList<>();
-
         Map<Integer, Integer> productIdQuantity = products.stream()
                 .collect(Collectors.toMap(ProductIdQuantity::getId, ProductIdQuantity::getQuantity));
         List<Integer> requiredProductIds = new ArrayList<>(productIdQuantity.keySet());
 
-        Map<Integer, Stock> stockForProduct = stockRepository
-                .findById_ProductInGroupById_LocationCountById_Product(requiredProductIds, products.size())
+        Map<Integer, Stock> stockWithAllProducts = stockRepository
+                .findLocationsWithEnoughProductQuantities(products)
                 .stream()
                 .collect(Collectors.toMap(Stock::getProductId, item -> item));
 
-        List<Integer> locations = stockForProduct
-                .values()
-                .stream()
-                .distinct()
-                .map(stock -> stock.getId().getLocation())
-                .collect(Collectors.toList());
+        if (stockWithAllProducts.isEmpty()) {
+            throw new LocationWithRequiredProductsNotFoundException();
+        } else {
 
-        for (Integer locationId : locations) {
-            long countProductsWithEnoughStockInLocation = stockForProduct
-                    .entrySet()
-                    .stream()
-                    .filter(stock -> stock.getValue().getId().getLocation() == locationId)
-                    .filter(stock -> stock.getValue().getQuantity() >= productIdQuantity.get(stock.getKey()))
-                    .count();
-
-            if (countProductsWithEnoughStockInLocation == products.size()) {
-                Optional<Location> location = locationRepository.findById(locationId);
-                productRepository.findByIdIn(requiredProductIds)
-                        .stream()
-                        .map(product -> locationProductQuantities.add(new LocationProductQuantity(location.get(), product, productIdQuantity.get(product.getId()))));
-
-                return locationProductQuantities;
+            Integer locationId = stockWithAllProducts.values().iterator().next().getId().getLocation();
+            Optional<Location> location = locationRepository.findById(locationId);
+            if (!location.isPresent()) {
+                throw new LocationWithRequiredProductsNotFoundException();
             }
+
+            return productRepository.findByIdIn(requiredProductIds)
+                    .stream()
+                    .map(product -> new LocationProductQuantity(location.orElse(null), product, productIdQuantity.get(product.getId())))
+                    .collect(Collectors.toList());
+
+
         }
-        throw new LocationWithRequiredProductsNotFoundException();
     }
 }

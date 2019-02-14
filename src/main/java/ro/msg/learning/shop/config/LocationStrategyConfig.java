@@ -30,7 +30,7 @@ public class LocationStrategyConfig {
 
     @Bean
     public LocationFinderStrategy getLocationFinderStrategy() {
-        if (locationStrategyType.equals(SINGLE_LOCATION)) {
+        if (locationStrategyType.equalsIgnoreCase(SINGLE_LOCATION.name())) {
             return new SingleLocationFinder(stockRepository, locationRepository, productRepository);
         } else return new SingleLocationFinder(stockRepository, locationRepository, productRepository);
     }

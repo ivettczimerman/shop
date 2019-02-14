@@ -20,7 +20,7 @@ public class StockService {
     }
 
     public List<Stock> getStockForLocation(int locationId) {
-        return stockRepository.findAllById_Location(locationId);
+        return stockRepository.findAllByIdLocation(locationId);
     }
 
     public void subtractShippedGoods(List<LocationProductQuantity> locationProductQuantities) {
@@ -28,12 +28,13 @@ public class StockService {
                 .stream()
                 .collect(Collectors.toMap(LocationProductQuantity::getStockId, item -> item));
 
-        List<Stock> stocksToBeUpdated = stockRepository.findByIdIn(new ArrayList<>(locationProductQuantityMap.keySet()));
-        stocksToBeUpdated
-                .stream()
-                .map(stock -> subtractOrderedProductsQuantity(stock, locationProductQuantityMap.get(stock.getId()).getQuantity()));
-
-        stockRepository.saveAll(stocksToBeUpdated);
+        List<StockId> stockIds = new ArrayList<>(locationProductQuantityMap.keySet());
+        stockRepository.saveAll(
+                stockRepository.findByIdIn(stockIds)
+                        .stream()
+                        .map(stock -> subtractOrderedProductsQuantity(stock, locationProductQuantityMap.get(stock.getId()).getQuantity()))
+                        .collect(Collectors.toList())
+        );
     }
 
     private Stock subtractOrderedProductsQuantity(Stock stock, int orderedQuantity) {
