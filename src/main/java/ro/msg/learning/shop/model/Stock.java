@@ -1,13 +1,14 @@
 package ro.msg.learning.shop.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
-import java.util.Objects;
 
-@Entity(name = "Stock")
-@Table(name = "stock")
+@Entity
+@Table
 @Data
+@EqualsAndHashCode(of = {"product", "location"})
 public class Stock {
     @EmbeddedId
     private StockId id;
@@ -23,28 +24,12 @@ public class Stock {
     @Column(name = "quantity")
     private int quantity;
 
-    public Stock(){}
+    public Stock() {
+    }
 
     public Stock(Product product, Location location) {
         this.product = product;
         this.location = location;
         this.id = new StockId(product.getId(), location.getId());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (o == null || getClass() != o.getClass())
-            return false;
-
-        Stock that = (Stock) o;
-        return Objects.equals(product, that.product) &&
-                Objects.equals(location, that.location);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(product, location);
     }
 }

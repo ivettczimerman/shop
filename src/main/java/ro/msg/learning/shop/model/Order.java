@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-@Entity(name = "Order")
-@Table(name = "order")
+@Entity
+@Table
 @Data
 public class Order {
     @Id
@@ -29,26 +29,24 @@ public class Order {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<OrderDetail> products = new ArrayList<>();
+    private List<OrderDetail> orderDetails = new ArrayList<>();
 
-    private String country;
-    private String city;
-    private String county;
-    private String streetAddress;
+    @Embedded
+    private Address address;
 
     public void addProduct(Product product) {
         OrderDetail orderDetail = new OrderDetail(product, this);
-        products.add(orderDetail);
-        product.getOrders().add(orderDetail);
+        orderDetails.add(orderDetail);
+        product.getOrderDetails().add(orderDetail);
     }
 
     public void removeProduct(Product product) {
-        for (Iterator<OrderDetail> iterator = products.iterator(); iterator.hasNext(); ) {
+        for (Iterator<OrderDetail> iterator = orderDetails.iterator(); iterator.hasNext(); ) {
             OrderDetail orderDetail = iterator.next();
 
             if (orderDetail.getOrder().equals(this) && orderDetail.getProduct().equals(product)) {
                 iterator.remove();
-                orderDetail.getProduct().getOrders().remove(orderDetail);
+                orderDetail.getProduct().getOrderDetails().remove(orderDetail);
                 orderDetail.setProduct(null);
                 orderDetail.setOrder(null);
             }
