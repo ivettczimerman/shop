@@ -1,5 +1,8 @@
 package ro.msg.learning.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,14 +23,20 @@ public class Product {
     private BigDecimal price;
     private Double weight;
 
+    @JsonUnwrapped
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category")
     private ProductCategory category;
 
+    @JsonBackReference
+    @JsonUnwrapped
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "supplier")
     private Supplier supplier;
 
+    @JsonManagedReference
+    @JsonUnwrapped
     @OneToMany(
             mappedBy = "location",
             cascade = CascadeType.ALL,
@@ -35,6 +44,8 @@ public class Product {
     )
     private List<Stock> locations = new ArrayList<>();
 
+    @JsonManagedReference
+    @JsonUnwrapped
     @OneToMany(
             mappedBy = "order",
             cascade = CascadeType.ALL,

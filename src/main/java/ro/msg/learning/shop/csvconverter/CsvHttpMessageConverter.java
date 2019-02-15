@@ -35,20 +35,23 @@ public class CsvHttpMessageConverter<T> extends AbstractGenericHttpMessageConver
     @Override
     protected List<T> readInternal(Class<? extends List<T>> aClass, HttpInputMessage httpInputMessage) throws IOException {
         ParameterizedType parameterizedType = (ParameterizedType) aClass.getGenericSuperclass();
-        return csvConverter.fromCsv((Class<T>) parameterizedType.getActualTypeArguments()[0], httpInputMessage.getBody());
+        Class<T> typeArg = (Class<T>) parameterizedType.getActualTypeArguments()[0];
+        return csvConverter.fromCsv(typeArg, httpInputMessage.getBody());
     }
 
     @SuppressWarnings("unchecked")
     @Override
     protected void writeInternal(List<T> tlist, Type type, HttpOutputMessage httpOutputMessage) throws IOException {
         ParameterizedType parameterizedType = (ParameterizedType) type;
-        csvConverter.toCsv((Class<T>) parameterizedType.getActualTypeArguments()[0], tlist, httpOutputMessage.getBody());
+        Class<T> typeArg = (Class<T>) parameterizedType.getActualTypeArguments()[0];
+        csvConverter.toCsv(typeArg, tlist, httpOutputMessage.getBody());
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public List<T> read(Type type, Class<?> aClass, HttpInputMessage httpInputMessage) throws IOException {
         ParameterizedType parameterizedType = (ParameterizedType) type;
-        return csvConverter.fromCsv((Class<T>) parameterizedType.getActualTypeArguments()[0], httpInputMessage.getBody());
+        Class<T> typeArg = (Class<T>) parameterizedType.getActualTypeArguments()[0];
+        return csvConverter.fromCsv(typeArg, httpInputMessage.getBody());
     }
 }

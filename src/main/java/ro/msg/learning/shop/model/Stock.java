@@ -1,5 +1,7 @@
 package ro.msg.learning.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,13 +11,18 @@ import java.util.Objects;
 @Table(name = "stock")
 @Data
 public class Stock {
+    @JsonUnwrapped
     @EmbeddedId
     private StockId id;
 
+    @JsonUnwrapped
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @MapsId("product")
     private Product product;
 
+    @JsonBackReference
+    @JsonUnwrapped
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("location")
     private Location location;

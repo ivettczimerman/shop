@@ -1,6 +1,9 @@
 package ro.msg.learning.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.*;
@@ -8,6 +11,7 @@ import java.util.*;
 @Entity(name = "Location")
 @Table(name = "location")
 @Data
+@ToString(exclude = {"products"})
 public class Location {
 
     @Id
@@ -20,9 +24,13 @@ public class Location {
     private String county;
     private String streetAddress;
 
+    @JsonUnwrapped
     @OneToMany(mappedBy = "shippedFrom")
+    @JsonManagedReference
     private List<Order> orders;
 
+    @JsonManagedReference
+    @JsonUnwrapped
     @OneToMany(
             mappedBy = "product",
             cascade = CascadeType.ALL,

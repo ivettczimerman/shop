@@ -28,7 +28,7 @@ public class StockRepositoryCustomImpl implements StockRepositoryCustom {
         productIdQuantities.forEach(productIdQuantity -> predicates.add(
                 cb.and(
                         cb.equal(productIdPath, productIdQuantity.getId()),
-                        cb.greaterThanOrEqualTo(quantityPath, productIdQuantity.getId())
+                        cb.greaterThanOrEqualTo(quantityPath, productIdQuantity.getQuantity())
                 )
         ));
 

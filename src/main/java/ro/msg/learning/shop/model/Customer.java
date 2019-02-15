@@ -1,5 +1,7 @@
 package ro.msg.learning.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,6 +19,8 @@ public class Customer {
     private String lastName;
     private String username;
 
+    @JsonUnwrapped
     @OneToMany(mappedBy = "customer")
+    @JsonManagedReference
     private List<Order> orders;
 }

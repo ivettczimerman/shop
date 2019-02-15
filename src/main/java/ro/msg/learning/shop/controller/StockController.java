@@ -20,7 +20,7 @@ public class StockController {
         this.stockService = stockService;
     }
 
-    @GetMapping(path = "/stocks/{location_id}", produces = "text/csv")
+    @GetMapping(path = "/stocks/{locationId}", produces = "text/csv")
     public List<Stock> getStockByLocationId(@PathVariable int locationId, HttpServletResponse response) {
         response.setHeader("Content-Disposition", "attachment; file=stocks.csv");
         return stockService.getStockForLocation(locationId);
