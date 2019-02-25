@@ -1,5 +1,7 @@
 package ro.msg.learning.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,6 +18,8 @@ public class ProductCategory {
     private String name;
     private String description;
 
+    @JsonManagedReference
+    @JsonUnwrapped
     @OneToMany(mappedBy = "category")
     private List<Product> products;
 }

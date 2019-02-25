@@ -12,4 +12,14 @@ public class Address {
     private String county;
     private String country;
     private String streetAddress;
+
+    public Address() {
+    }
+
+    public Address(String city, String county, String country, String streetAddress) {
+        this.city = city;
+        this.county = county;
+        this.country = country;
+        this.streetAddress = streetAddress;
+    }
 }

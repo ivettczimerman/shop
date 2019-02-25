@@ -1,5 +1,8 @@
 package ro.msg.learning.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "product_order")
 @Data
 public class Order {
     @Id
@@ -16,14 +19,19 @@ public class Order {
     @GeneratedValue(generator = "order_generator")
     private int id;
 
+    @JsonUnwrapped
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shippedFrom")
     private Location shippedFrom;
 
+    @JsonUnwrapped
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer")
+    @JsonBackReference
     private Customer customer;
 
+    @JsonManagedReference
     @OneToMany(
             mappedBy = "product",
             cascade = CascadeType.ALL,
@@ -34,8 +42,8 @@ public class Order {
     @Embedded
     private Address address;
 
-    public void addProduct(Product product) {
-        OrderDetail orderDetail = new OrderDetail(product, this);
+    public void addProduct(Product product, int quantity) {
+        OrderDetail orderDetail = new OrderDetail(product, this, quantity);
         orderDetails.add(orderDetail);
         product.getOrderDetails().add(orderDetail);
     }

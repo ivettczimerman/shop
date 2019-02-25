@@ -1,5 +1,7 @@
 package ro.msg.learning.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -10,13 +12,18 @@ import javax.persistence.*;
 @Data
 @EqualsAndHashCode(of = {"product", "location"})
 public class Stock {
+    @JsonUnwrapped
     @EmbeddedId
     private StockId id;
 
+    @JsonUnwrapped
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @MapsId("product")
     private Product product;
 
+    @JsonBackReference
+    @JsonUnwrapped
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("location")
     private Location location;
