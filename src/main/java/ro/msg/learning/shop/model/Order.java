@@ -39,15 +39,13 @@ public class Order {
     )
     private List<OrderDetail> orderDetails = new ArrayList<>();
 
-    private String country;
-    private String city;
-    private String county;
-    private String streetAddress;
+    @Embedded
+    private Address address;
 
     public void addProduct(Product product, int quantity) {
         OrderDetail orderDetail = new OrderDetail(product, this, quantity);
         orderDetails.add(orderDetail);
-        product.getOrders().add(orderDetail);
+        product.getOrderDetails().add(orderDetail);
     }
 
     public void removeProduct(Product product) {
@@ -56,7 +54,7 @@ public class Order {
 
             if (orderDetail.getOrder().equals(this) && orderDetail.getProduct().equals(product)) {
                 iterator.remove();
-                orderDetail.getProduct().getOrders().remove(orderDetail);
+                orderDetail.getProduct().getOrderDetails().remove(orderDetail);
                 orderDetail.setProduct(null);
                 orderDetail.setOrder(null);
             }

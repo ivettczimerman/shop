@@ -10,8 +10,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "Product")
-@Table(name = "product")
+@Entity
+@Table
 @Data
 public class Product {
     @Id
@@ -42,7 +42,7 @@ public class Product {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Stock> locations = new ArrayList<>();
+    private List<Stock> stocks = new ArrayList<>();
 
     @JsonManagedReference
     @JsonUnwrapped
@@ -51,5 +51,5 @@ public class Product {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<OrderDetail> orders = new ArrayList<>();
+    private List<OrderDetail> orderDetails = new ArrayList<>();
 }

@@ -47,10 +47,8 @@ public class OrderService {
 
     private Order mapNewOrderToOrder(NewOrder newOrder, Location location) {
         Order order = new Order();
-        order.setCountry(newOrder.getCountry());
-        order.setCity(newOrder.getCity());
-        order.setCounty(newOrder.getCounty());
-        order.setStreetAddress(newOrder.getStreetAddress());
+        Address address = new Address(newOrder.getCity(), newOrder.getCountry(), newOrder.getCounty(), newOrder.getStreetAddress());
+        order.setAddress(address);
 
         //Set customer
         customerRepository.findById(1);

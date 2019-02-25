@@ -7,8 +7,8 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "Supplier")
-@Table(name = "supplier")
+@Entity
+@Table
 @Data
 public class Supplier {
     @Id

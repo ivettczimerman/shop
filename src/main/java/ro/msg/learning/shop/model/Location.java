@@ -8,10 +8,10 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.*;
 
-@Entity(name = "Location")
-@Table(name = "location")
+@Entity
+@Table
 @Data
-@ToString(exclude = {"products"})
+@ToString(exclude = {"stocks"})
 public class Location {
 
     @Id
@@ -19,10 +19,9 @@ public class Location {
     @GeneratedValue(generator = "location_generator")
     private int id;
     private String name;
-    private String country;
-    private String city;
-    private String county;
-    private String streetAddress;
+
+    @Embedded
+    private Address address;
 
     @JsonUnwrapped
     @OneToMany(mappedBy = "shippedFrom")
@@ -36,21 +35,21 @@ public class Location {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Stock> products = new ArrayList<>();
+    private List<Stock> stocks = new ArrayList<>();
 
     public void addProduct(Product product) {
         Stock stock = new Stock(product, this);
-        products.add(stock);
-        product.getLocations().add(stock);
+        stocks.add(stock);
+        product.getStocks().add(stock);
     }
 
     public void removeProduct(Product product) {
-        for (Iterator<Stock> iterator = products.iterator(); iterator.hasNext(); ) {
+        for (Iterator<Stock> iterator = stocks.iterator(); iterator.hasNext(); ) {
             Stock stock = iterator.next();
 
             if (stock.getLocation().equals(this) && stock.getProduct().equals(product)) {
                 iterator.remove();
-                stock.getProduct().getLocations().remove(stock);
+                stock.getProduct().getStocks().remove(stock);
                 stock.setProduct(null);
                 stock.setLocation(null);
             }

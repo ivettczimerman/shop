@@ -1,11 +1,13 @@
 package ro.msg.learning.shop.model;
 
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Embeddable
+@EqualsAndHashCode(of = {"product", "order"})
 public class OrderDetailId implements Serializable {
     @Column(name = "order")
     private int order;
@@ -27,19 +29,5 @@ public class OrderDetailId implements Serializable {
 
     public int getProduct() {
         return product;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof OrderDetailId)) return false;
-        OrderDetailId that = (OrderDetailId) o;
-        return Objects.equals(getOrder(), that.getOrder()) &&
-                Objects.equals(getProduct(), that.getProduct());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getOrder(), getProduct());
     }
 }
