@@ -15,7 +15,7 @@ public class CsvConverterTest {
     private List<TestStock> stocks = new ArrayList<>();
 
     @Before
-    public void setup() {
+    public void setUp() {
         csvConverter = new CsvConverter();
         stocks.add(new TestStock(1, 2, 3, 4));
     }

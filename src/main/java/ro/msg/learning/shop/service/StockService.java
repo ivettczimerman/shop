@@ -23,7 +23,7 @@ public class StockService {
         return stockRepository.findAllByIdLocation(locationId);
     }
 
-    void subtractShippedGoods(List<LocationProductQuantity> locationProductQuantities) {
+    public void subtractShippedGoods(List<LocationProductQuantity> locationProductQuantities) {
         Map<StockId, LocationProductQuantity> locationProductQuantityMap = locationProductQuantities
                 .stream()
                 .collect(Collectors.toMap(LocationProductQuantity::getStockId, item -> item));
