@@ -4,7 +4,6 @@ import ro.msg.learning.shop.exception.LocationWithRequiredProductsNotFoundExcept
 import ro.msg.learning.shop.model.Location;
 import ro.msg.learning.shop.model.LocationProductQuantity;
 import ro.msg.learning.shop.model.ProductIdQuantity;
-import ro.msg.learning.shop.model.Stock;
 import ro.msg.learning.shop.repository.LocationRepository;
 import ro.msg.learning.shop.repository.ProductRepository;
 import ro.msg.learning.shop.repository.StockRepository;
@@ -33,16 +32,14 @@ public class SingleLocationFinder implements LocationFinderStrategy {
                 .collect(Collectors.toMap(ProductIdQuantity::getId, ProductIdQuantity::getQuantity));
         List<Integer> requiredProductIds = new ArrayList<>(productIdQuantity.keySet());
 
-        Map<Integer, Stock> stockWithAllProducts = stockRepository
-                .findLocationsWithEnoughProductQuantities(products)
-                .stream()
-                .collect(Collectors.toMap(Stock::getProductId, item -> item));
+        List<Integer> stockWithAllProducts = stockRepository
+                .findLocationsWithEnoughProductQuantities(products);
 
         if (stockWithAllProducts.isEmpty()) {
             throw new LocationWithRequiredProductsNotFoundException();
         } else {
 
-            Integer locationId = stockWithAllProducts.values().iterator().next().getId().getLocation();
+            Integer locationId = stockWithAllProducts.get(0);
             Optional<Location> location = locationRepository.findById(locationId);
             if (!location.isPresent()) {
                 throw new LocationWithRequiredProductsNotFoundException();
@@ -52,8 +49,6 @@ public class SingleLocationFinder implements LocationFinderStrategy {
                     .stream()
                     .map(product -> new LocationProductQuantity(location.orElse(null), product, productIdQuantity.get(product.getId())))
                     .collect(Collectors.toList());
-
-
         }
     }
 }

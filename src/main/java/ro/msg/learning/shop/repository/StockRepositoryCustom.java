@@ -7,7 +7,7 @@ import ro.msg.learning.shop.model.StockId;
 import java.util.List;
 
 public interface StockRepositoryCustom {
-    List<Stock> findLocationsWithEnoughProductQuantities(List<ProductIdQuantity> productIdQuantities);
+    List<Integer> findLocationsWithEnoughProductQuantities(List<ProductIdQuantity> productIdQuantities);
 
     List<Stock> findAllByIdLocation(int locationId);
 

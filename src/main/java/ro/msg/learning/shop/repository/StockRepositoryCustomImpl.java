@@ -16,9 +16,9 @@ public class StockRepositoryCustomImpl implements StockRepositoryCustom {
     private EntityManager entityManager;
 
     @Override
-    public List<Stock> findLocationsWithEnoughProductQuantities(List<ProductIdQuantity> productIdQuantities) {
+    public List<Integer> findLocationsWithEnoughProductQuantities(List<ProductIdQuantity> productIdQuantities) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Stock> query = cb.createQuery(Stock.class);
+        CriteriaQuery<Integer> query = cb.createQuery(Integer.class);
         Root<Stock> stock = query.from(Stock.class);
         List<Predicate> predicates = new ArrayList<>();
         Path<Integer> productIdPath = stock.get("id").get("product");
@@ -33,7 +33,7 @@ public class StockRepositoryCustomImpl implements StockRepositoryCustom {
         ));
 
         query
-                .select(stock)
+                .select(locationIdPath)
                 .where(cb.or(predicates.toArray(new Predicate[0])))
                 .groupBy(locationIdPath)
                 .having(cb.equal(cb.count(productIdPath), productIdQuantities.size()));

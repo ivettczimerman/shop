@@ -38,7 +38,7 @@ public class OrderService {
                 .findLocationProductQuantity(newOrder.getProducts());
 
         Order order = mapNewOrderToOrder(newOrder, locationProductQuantities.get(0).getLocation());
-        orderRepository.save(order);
+        orderRepository.saveAndFlush(order);
 
         stockService.subtractShippedGoods(locationProductQuantities);
 
