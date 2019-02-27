@@ -12,6 +12,8 @@ public class User {
 
     @Id
     private String username;
+
+    @Column(name = "pwd")
     private String password;
     private Boolean enabled;
 
