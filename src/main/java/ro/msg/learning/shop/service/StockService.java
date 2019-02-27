@@ -1,5 +1,6 @@
 package ro.msg.learning.shop.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.msg.learning.shop.model.LocationProductQuantity;
 import ro.msg.learning.shop.model.Stock;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 public class StockService {
     private StockRepository stockRepository;
 
+    @Autowired
     public StockService(StockRepository stockRepository) {
         this.stockRepository = stockRepository;
     }
