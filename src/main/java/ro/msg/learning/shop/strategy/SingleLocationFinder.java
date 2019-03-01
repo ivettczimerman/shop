@@ -1,6 +1,7 @@
 package ro.msg.learning.shop.strategy;
 
 import ro.msg.learning.shop.exception.LocationWithRequiredProductsNotFoundException;
+import ro.msg.learning.shop.model.Address;
 import ro.msg.learning.shop.model.Location;
 import ro.msg.learning.shop.model.LocationProductQuantity;
 import ro.msg.learning.shop.model.ProductIdQuantity;
@@ -27,7 +28,7 @@ public class SingleLocationFinder implements LocationFinderStrategy {
     }
 
     @Override
-    public List<LocationProductQuantity> findLocationProductQuantity(List<ProductIdQuantity> products) {
+    public List<LocationProductQuantity> findLocationProductQuantity(List<ProductIdQuantity> products, Address shipTo) {
         Map<Integer, Integer> productIdQuantity = products.stream()
                 .collect(Collectors.toMap(ProductIdQuantity::getId, ProductIdQuantity::getQuantity));
         List<Integer> requiredProductIds = new ArrayList<>(productIdQuantity.keySet());

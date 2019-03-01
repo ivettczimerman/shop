@@ -14,7 +14,7 @@ import ro.msg.learning.shop.service.UserService;
 
 @Configuration
 @EnableWebSecurity
-@Order(1)
+@Order(3)
 public class FormBasedAuthConfig extends WebSecurityConfigurerAdapter {
 
     private UserService userService;
