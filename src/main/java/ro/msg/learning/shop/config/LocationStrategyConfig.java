@@ -8,9 +8,11 @@ import ro.msg.learning.shop.repository.LocationRepository;
 import ro.msg.learning.shop.repository.ProductRepository;
 import ro.msg.learning.shop.repository.StockRepository;
 import ro.msg.learning.shop.strategy.LocationFinderStrategy;
+import ro.msg.learning.shop.strategy.NearestLocationFinder;
 import ro.msg.learning.shop.strategy.LocationStrategyType;
 import ro.msg.learning.shop.strategy.SingleLocationFinder;
 
+import static ro.msg.learning.shop.strategy.LocationStrategyType.NEAREST_LOCATION;
 import static ro.msg.learning.shop.strategy.LocationStrategyType.SINGLE_LOCATION;
 
 @Configuration
@@ -28,6 +30,10 @@ public class LocationStrategyConfig {
     public LocationFinderStrategy getLocationFinderStrategy() {
         if (locationStrategyType.equals(SINGLE_LOCATION)) {
             return new SingleLocationFinder(stockRepository, locationRepository, productRepository);
-        } else return new SingleLocationFinder(stockRepository, locationRepository, productRepository);
+        } else if (locationStrategyType.equals(NEAREST_LOCATION))
+            return new NearestLocationFinder(stockRepository, locationRepository, productRepository);
+        else {
+            return new SingleLocationFinder(stockRepository, locationRepository, productRepository);
+        }
     }
 }

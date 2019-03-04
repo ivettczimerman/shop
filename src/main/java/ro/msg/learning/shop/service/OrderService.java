@@ -27,7 +27,7 @@ public class OrderService {
     @Transactional
     public Order createOrder(NewOrder newOrder) {
         List<LocationProductQuantity> locationProductQuantities = locationFinderStrategy
-                .findLocationProductQuantity(newOrder.getProducts());
+                .findLocationProductQuantity(newOrder.getProducts(), newOrder.getAddress());
 
         Order order = mapNewOrderToOrder(newOrder, locationProductQuantities.get(0).getLocation());
         orderRepository.saveAndFlush(order);
@@ -39,8 +39,7 @@ public class OrderService {
 
     private Order mapNewOrderToOrder(NewOrder newOrder, Location location) {
         Order order = new Order();
-        Address address = newOrder.getAddress();
-        order.setAddress(address);
+        order.setAddress(newOrder.getAddress());
 
         //Set customer
         order.setCustomer(customerRepository.findById(1).orElse(null));
