@@ -3,7 +3,7 @@ package ro.msg.learning.shop.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import ro.msg.learning.shop.exception.LocationWithRequiredProductsNotFoundException;
+import ro.msg.learning.shop.exception.LocationNotFoundException;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -44,7 +44,7 @@ public class DistanceMatrixResponse {
         Row.Element el = getRows().get(0).getElements()
                 .stream()
                 .min(Comparator.comparing(element -> element.distance.value))
-                .orElseThrow(LocationWithRequiredProductsNotFoundException::new);
+                .orElseThrow(LocationNotFoundException::new);
 
         return getRows().get(0).getElements().indexOf(el);
     }

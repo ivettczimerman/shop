@@ -3,7 +3,7 @@ package ro.msg.learning.shop.strategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.client.RestTemplate;
-import ro.msg.learning.shop.exception.LocationWithRequiredProductsNotFoundException;
+import ro.msg.learning.shop.exception.LocationNotFoundException;
 import ro.msg.learning.shop.model.*;
 import ro.msg.learning.shop.repository.LocationRepository;
 import ro.msg.learning.shop.repository.ProductRepository;
@@ -46,7 +46,7 @@ public class NearestLocationFinder implements LocationFinderStrategy {
                 .findLocationsWithEnoughProductQuantities(products);
 
         if (stockWithAllProducts.isEmpty()) {
-            throw new LocationWithRequiredProductsNotFoundException();
+            throw new LocationNotFoundException();
         } else {
             List<Location> locations = locationRepository.findAllById(stockWithAllProducts);
             List<Address> stockAddresses = locations.stream()
@@ -63,7 +63,7 @@ public class NearestLocationFinder implements LocationFinderStrategy {
 
             Optional<Location> location = locationRepository.findById(locationId);
             if (!location.isPresent()) {
-                throw new LocationWithRequiredProductsNotFoundException();
+                throw new LocationNotFoundException();
             }
 
             return productRepository.findByIdIn(requiredProductIds)

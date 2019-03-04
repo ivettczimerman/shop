@@ -1,4 +1,4 @@
-package ro.msg.learning.shop;
+package ro.msg.learning.shop.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;

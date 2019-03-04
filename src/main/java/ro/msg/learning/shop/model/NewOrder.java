@@ -8,8 +8,6 @@ import java.util.List;
 @Data
 public class NewOrder {
     private Timestamp timestamp;
-
     private Address address;
-
     private List<ProductIdQuantity> products;
 }
