@@ -1,6 +1,6 @@
 package ro.msg.learning.shop.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,14 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class StockController {
 
-    private StockService stockService;
-
-    @Autowired
-    public StockController(StockService stockService) {
-        this.stockService = stockService;
-    }
+    private final StockService stockService;
 
     @GetMapping(path = "/stocks/{locationId}", produces = "text/csv")
     public List<Stock> getStockByLocationId(@PathVariable int locationId, HttpServletResponse response) {

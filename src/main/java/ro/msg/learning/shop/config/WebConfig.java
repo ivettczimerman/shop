@@ -1,4 +1,4 @@
-package ro.msg.learning.shop;
+package ro.msg.learning.shop.config;
 
 import org.h2.server.web.WebServlet;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;

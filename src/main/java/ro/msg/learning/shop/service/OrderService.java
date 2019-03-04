@@ -1,6 +1,6 @@
 package ro.msg.learning.shop.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ro.msg.learning.shop.model.*;
 import ro.msg.learning.shop.repository.CustomerRepository;
@@ -8,31 +8,23 @@ import ro.msg.learning.shop.repository.OrderRepository;
 import ro.msg.learning.shop.repository.ProductRepository;
 import ro.msg.learning.shop.strategy.LocationFinderStrategy;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
 
-    private LocationFinderStrategy locationFinderStrategy;
-    private OrderRepository orderRepository;
-    private CustomerRepository customerRepository;
-    private ProductRepository productRepository;
-    private StockService stockService;
+    private final LocationFinderStrategy locationFinderStrategy;
+    private final OrderRepository orderRepository;
+    private final CustomerRepository customerRepository;
+    private final ProductRepository productRepository;
+    private final StockService stockService;
 
-    @Autowired
-    public OrderService(LocationFinderStrategy locationFinderStrategy, OrderRepository orderRepository,
-                        StockService stockService, CustomerRepository customerRepository,
-                        ProductRepository productRepository) {
-        this.locationFinderStrategy = locationFinderStrategy;
-        this.orderRepository = orderRepository;
-        this.stockService = stockService;
-        this.customerRepository = customerRepository;
-        this.productRepository = productRepository;
-    }
-
+    @Transactional
     public Order createOrder(NewOrder newOrder) {
         List<LocationProductQuantity> locationProductQuantities = locationFinderStrategy
                 .findLocationProductQuantity(newOrder.getProducts());
@@ -47,11 +39,11 @@ public class OrderService {
 
     private Order mapNewOrderToOrder(NewOrder newOrder, Location location) {
         Order order = new Order();
-        Address address = new Address(newOrder.getCity(), newOrder.getCountry(), newOrder.getCounty(), newOrder.getStreetAddress());
+        Address address = newOrder.getAddress();
         order.setAddress(address);
 
         //Set customer
-        customerRepository.findById(1);
+        order.setCustomer(customerRepository.findById(1).orElse(null));
 
         //Set Location
         order.setShippedFrom(location);

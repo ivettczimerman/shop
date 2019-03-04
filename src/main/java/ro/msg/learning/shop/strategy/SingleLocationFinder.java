@@ -1,6 +1,7 @@
 package ro.msg.learning.shop.strategy;
 
-import ro.msg.learning.shop.exception.LocationWithRequiredProductsNotFoundException;
+import lombok.RequiredArgsConstructor;
+import ro.msg.learning.shop.exception.LocationNotFoundException;
 import ro.msg.learning.shop.model.Location;
 import ro.msg.learning.shop.model.LocationProductQuantity;
 import ro.msg.learning.shop.model.ProductIdQuantity;
@@ -14,17 +15,12 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 public class SingleLocationFinder implements LocationFinderStrategy {
 
-    private StockRepository stockRepository;
-    private LocationRepository locationRepository;
-    private ProductRepository productRepository;
-
-    public SingleLocationFinder(StockRepository stockRepository, LocationRepository locationRepository, ProductRepository productRepository) {
-        this.stockRepository = stockRepository;
-        this.locationRepository = locationRepository;
-        this.productRepository = productRepository;
-    }
+    private final StockRepository stockRepository;
+    private final LocationRepository locationRepository;
+    private final ProductRepository productRepository;
 
     @Override
     public List<LocationProductQuantity> findLocationProductQuantity(List<ProductIdQuantity> products) {
@@ -36,13 +32,13 @@ public class SingleLocationFinder implements LocationFinderStrategy {
                 .findLocationsWithEnoughProductQuantities(products);
 
         if (stockWithAllProducts.isEmpty()) {
-            throw new LocationWithRequiredProductsNotFoundException();
+            throw new LocationNotFoundException();
         } else {
 
             Integer locationId = stockWithAllProducts.get(0);
             Optional<Location> location = locationRepository.findById(locationId);
             if (!location.isPresent()) {
-                throw new LocationWithRequiredProductsNotFoundException();
+                throw new LocationNotFoundException();
             }
 
             return productRepository.findByIdIn(requiredProductIds)

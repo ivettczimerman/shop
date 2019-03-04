@@ -1,6 +1,6 @@
 package ro.msg.learning.shop.authentication;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -15,14 +15,10 @@ import ro.msg.learning.shop.service.UserService;
 @Configuration
 @Order(2)
 @EnableGlobalMethodSecurity(securedEnabled = true)
+@RequiredArgsConstructor
 public class BasicHttpAuthConfig extends WebSecurityConfigurerAdapter {
 
-    private UserService userService;
-
-    @Autowired
-    public BasicHttpAuthConfig(UserService userService) {
-        this.userService = userService;
-    }
+    private final UserService userService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {

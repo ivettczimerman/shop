@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class RestResponseEntityExceptionHandler {
 
     @ResponseBody
-    @ExceptionHandler(LocationWithRequiredProductsNotFoundException.class)
+    @ExceptionHandler(LocationNotFoundException.class)
     protected ResponseEntity handleLocationNotFound(
-            LocationWithRequiredProductsNotFoundException ex) {
+            LocationNotFoundException ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 
@@ -27,6 +27,12 @@ public class RestResponseEntityExceptionHandler {
     @ResponseBody
     @ExceptionHandler(UsernameNotFoundException.class)
     protected ResponseEntity handleUsernameNotFoundException(UsernameNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ResponseBody
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity handleOtherExceptions(Exception ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }
