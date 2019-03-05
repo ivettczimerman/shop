@@ -37,7 +37,8 @@ public class NearestLocationFinder implements LocationFinderStrategy {
     }
 
     @Override
-    public List<LocationProductQuantity> findLocationProductQuantity(List<ProductIdQuantity> products, Address shipTo) {
+    public List<LocationProductQuantity> findLocationProductQuantity(NewOrder order) {
+        List<ProductIdQuantity> products = order.getProducts();
         Map<Integer, Integer> productIdQuantity = products.stream()
                 .collect(Collectors.toMap(ProductIdQuantity::getId, ProductIdQuantity::getQuantity));
         List<Integer> requiredProductIds = new ArrayList<>(productIdQuantity.keySet());
@@ -53,7 +54,7 @@ public class NearestLocationFinder implements LocationFinderStrategy {
                     .map(Location::getAddress)
                     .collect(Collectors.toList());
             DistanceMatrixResponse response = findDistanceToLocation(
-                    convertAddressToDistanceMatrixParam(shipTo),
+                    convertAddressToDistanceMatrixParam(order.getAddress()),
                     convertAddressesToDistanceMatrixParam(stockAddresses)
             );
 

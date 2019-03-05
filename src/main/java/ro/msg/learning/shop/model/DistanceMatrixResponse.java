@@ -43,7 +43,7 @@ public class DistanceMatrixResponse {
     public int getNearestLocationIndex() {
         Row.Element el = getRows().get(0).getElements()
                 .stream()
-                .min(Comparator.comparing(element -> element.distance.value))
+                .min(Comparator.comparing(element -> element.getDistance().getValue()))
                 .orElseThrow(LocationNotFoundException::new);
 
         return getRows().get(0).getElements().indexOf(el);

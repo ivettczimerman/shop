@@ -26,17 +26,17 @@ insert into customer (first_name, last_name, username) values ('Alanah', 'Espina
 insert into customer (first_name, last_name, username) values ('Kipper', 'Francesc', 'kfrancesc1');
 insert into customer (first_name, last_name, username) values ('Chancey', 'Crocken', 'ccrocken2');
 
-insert into location (city, country, county, name, street_address) values ('Hägersten', '	Sweden', 'Stockholm', '	Algoma', '982 Ilene Park');
-insert into location (city, country, county, name, street_address) values ('Benito Juarez', '	Mexico', 'Chihuahua', '	Cordelia', '96 Oneill Lane');
+insert into location (city, country, county, name, street_address) values ('Hägersten', 'Sweden', 'Stockholm', 'Algoma', '982 Ilene Park');
+insert into location (city, country, county, name, street_address) values ('Benito Juarez', 'Mexico', 'Chihuahua', 'Cordelia', '96 Oneill Lane');
 insert into location (city, country, county, name, street_address) values ('Gambang', 'Malaysia', 'Pahang', 'Packers', '622 Village Avenue');
 
 insert into product_order (city, country, county, street_address, customer, shipped_from) values ('Newmarket', 'Canada', 'Ontario', '75 Corben Place', 1, 2);
-insert into product_order (city, country, county, street_address, customer, shipped_from) values ('Paris', 'France', '	Île-de-France', '8 4th Trail', 3, 2);
+insert into product_order (city, country, county, street_address, customer, shipped_from) values ('Paris', 'France', 'Île-de-France', '8 4th Trail', 3, 2);
 insert into product_order (city, country, county, street_address, customer, shipped_from) values ('Edsbyn', 'Sweden', 'Gävleborg', '9 Knutson Place', 1, 3);
 insert into product_order (city, country, county, street_address, customer, shipped_from) values ('Vila Maior', 'Portugal', 'Aveiro', '96072 Fordem Street', 3, 1);
-insert into product_order (city, country, county, street_address, customer, shipped_from) values ('Paris', 'France', '	Île-de-France', '8 4th Trail', 3, 2);
+insert into product_order (city, country, county, street_address, customer, shipped_from) values ('Paris', 'France', 'Île-de-France', '8 4th Trail', 3, 2);
 insert into product_order (city, country, county, street_address, customer, shipped_from) values ('Edsbyn', 'Sweden', 'Gävleborg', '9 Knutson Place', 1, 3);
-insert into product_order (city, country, county, street_address, customer, shipped_from) values ('Newmarket', 'Canada', '	Ontario', '	75 Corben Place', 1, 3);
+insert into product_order (city, country, county, street_address, customer, shipped_from) values ('Newmarket', 'Canada', 'Ontario', '75 Corben Place', 1, 3);
 
 insert into product_category(description, name) values ('Vehicles and accessories', 'cars');
 insert into product_category(description, name) values ('Products for healthcare', 'pharmaceuticals');
