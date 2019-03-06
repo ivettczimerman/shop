@@ -27,8 +27,8 @@ insert into customer (first_name, last_name, username) values ('Kipper', 'France
 insert into customer (first_name, last_name, username) values ('Chancey', 'Crocken', 'ccrocken2');
 
 insert into location (city, country, county, name, street_address) values ('Hägersten', 'Sweden', 'Stockholm', 'Algoma', '982 Ilene Park');
-insert into location (city, country, county, name, street_address) values ('Benito Juarez', 'Mexico', 'Chihuahua', 'Cordelia', '96 Oneill Lane');
-insert into location (city, country, county, name, street_address) values ('Gambang', 'Malaysia', 'Pahang', 'Packers', '622 Village Avenue');
+insert into location (city, country, county, name, street_address) values ('Cluj-Napoca', 'Romania', 'CJ', 'Cordelia', 'Croitorilor 5');
+insert into location (city, country, county, name, street_address) values ('Passau', 'Germany', 'PA', 'Packers', 'Domplatz');
 
 insert into product_order (city, country, county, street_address, customer, shipped_from) values ('Newmarket', 'Canada', 'Ontario', '75 Corben Place', 1, 2);
 insert into product_order (city, country, county, street_address, customer, shipped_from) values ('Paris', 'France', 'Île-de-France', '8 4th Trail', 3, 2);

@@ -47,6 +47,8 @@ public class OrderService {
         //Set Location
         order.setShippedFrom(location);
 
+        order.setCreatedOn(newOrder.getTimestamp());
+
         Map<Integer, Integer> productIdQuantity = newOrder.getProducts()
                 .stream()
                 .collect(Collectors.toMap(ProductIdQuantity::getId, ProductIdQuantity::getQuantity));
