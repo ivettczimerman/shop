@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,6 +19,9 @@ public class Order {
     @SequenceGenerator(name = "order_generator", sequenceName = "order_sequence", allocationSize = 1)
     @GeneratedValue(generator = "order_generator")
     private int id;
+
+
+    private Timestamp createdOn;
 
     @JsonUnwrapped
     @JsonBackReference

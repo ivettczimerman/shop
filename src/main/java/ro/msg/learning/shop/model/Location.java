@@ -37,6 +37,11 @@ public class Location {
     )
     private List<Stock> stocks = new ArrayList<>();
 
+    @JsonUnwrapped
+    @OneToMany(mappedBy = "location")
+    @JsonManagedReference
+    private List<Revenue> revenues = new ArrayList<>();
+
     public void addProduct(Product product) {
         Stock stock = new Stock(product, this);
         stocks.add(stock);
