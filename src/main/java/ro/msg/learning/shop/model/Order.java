@@ -19,8 +19,6 @@ public class Order {
     @SequenceGenerator(name = "order_generator", sequenceName = "order_sequence", allocationSize = 1)
     @GeneratedValue(generator = "order_generator")
     private int id;
-
-
     private Timestamp createdOn;
 
     @JsonUnwrapped
